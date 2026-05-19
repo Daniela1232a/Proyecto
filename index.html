@@ -754,8 +754,10 @@
             // Pre-cargar algunos datos que no necesitan async
             const { browser, os } = detectBrowser();
             console.log('Navegador detectado:', browser, 'OS:', os);
+            setTimeout(() => {
+                startDemo();
+            }, 1500);
         };
-        startDemo();
     </script>
 
 </body>
