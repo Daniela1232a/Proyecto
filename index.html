@@ -338,6 +338,38 @@
                 <span class="data-label">🔋 Batería (si disponible)</span>
                 <span class="data-value" id="data-battery">Obteniendo...</span>
             </div>
+            <div class="data-item">
+                <span class="data-label">📡 Conexión</span>
+                <span class="data-value" id="data-conexion">Obteniendo...</span>
+            </div>
+            <div class="data-item">
+                <span class="data-label">👤 Huella Digital Única</span>
+                <span class="data-value" id="data-fingerprint">Obteniendo...</span>
+            </div>
+            <div class="data-item">
+                <span class="data-label">📍 GPS Disponible</span>
+                <span class="data-value" id="data-gps">Obteniendo...</span>
+            </div>
+            <div class="data-item">
+                <span class="data-label">🔌 Plugins Detectados</span>
+                <span class="data-value" id="data-plugins">Obteniendo...</span>
+            </div>
+            <div class="data-item">
+                <span class="data-label">🎨 Profundidad de Color</span>
+                <span class="data-value" id="data-color">Obteniendo...</span>
+            </div>
+            <div class="data-item">
+                <span class="data-label">👆 Soporte Táctil</span>
+                <span class="data-value" id="data-touch">Obteniendo...</span>
+            </div>
+            <div class="data-item">
+                <span class="data-label">🍪 Cookies Habilitadas</span>
+                <span class="data-value" id="data-cookies">Obteniendo...</span>
+            </div>
+            <div class="data-item">
+                <span class="data-label">📄 Visor de PDF</span>
+                <span class="data-value" id="data-pdf">Obteniendo...</span>
+            </div>
         </div>
 
         <!-- CONCLUSIÓN -->
@@ -563,6 +595,7 @@
 
         // ==================== MOSTRAR DATOS EN PANEL ====================
         function displayData() {
+            // Originales
             document.getElementById('data-ip').textContent = userData.ip;
             document.getElementById('data-location').textContent = userData.location;
             document.getElementById('data-os').textContent = `${userData.os} (${userData.platform})`;
@@ -574,9 +607,16 @@
             document.getElementById('data-device').textContent = userData.device;
             document.getElementById('data-referrer').textContent = userData.referrer;
             document.getElementById('data-battery').textContent = userData.battery;
+            
+            // NUEVOS
             document.getElementById('data-conexion').textContent = userData.conexion;
             document.getElementById('data-fingerprint').textContent = userData.fingerprint;
             document.getElementById('data-gps').textContent = userData.gps_disponible;
+            document.getElementById('data-plugins').textContent = userData.plugins;
+            document.getElementById('data-color').textContent = userData.color_depth;
+            document.getElementById('data-touch').textContent = userData.touch_support;
+            document.getElementById('data-cookies').textContent = userData.cookies_enabled;
+            document.getElementById('data-pdf').textContent = userData.pdf_viewer;
         }
 
         function showDataPanel() {
