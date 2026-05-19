@@ -483,8 +483,28 @@
             const ipData = await getIPAndLocation();
             const battery = await getBatteryInfo();
             const { browser, os } = detectBrowser();
-
+        
+            // 1. Velocidad de conexión
+            const conn = navigator.connection;
+            const conexionInfo = conn 
+                ? `${conn.effectiveType?.toUpperCase() || 'Desconocido'} (${conn.downlink || '?'} Mbps)` 
+                : 'No disponible';
+        
+            // 2. Fingerprint único del dispositivo
+            const fingerprint = generateFingerprint();
+        
+            // 3. ¿GPS disponible?
+            const gpsDisponible = 'geolocation' in navigator 
+                ? 'Sí — el navegador puede solicitar tu ubicación exacta' 
+                : 'No disponible';
+        
+            // 4. Plugins instalados (solo los nombres, no detalles sensibles)
+            const plugins = navigator.plugins 
+                ? Array.from(navigator.plugins).slice(0, 5).map(p => p.name).join(', ') || 'Ninguno detectado'
+                : 'No disponible';
+        
             userData = {
+                // Datos originales
                 ip: ipData.ip,
                 location: `${ipData.city}, ${ipData.region}, ${ipData.country}`,
                 isp: ipData.isp,
@@ -501,8 +521,48 @@
                 platform: navigator.platform,
                 cores: navigator.hardwareConcurrency || 'Desconocido',
                 memory: navigator.deviceMemory ? `${navigator.deviceMemory} GB` : 'Desconocido',
-                timestamp: new Date().toLocaleString('es-ES', { timeZone: 'America/Mexico_City' })
+                timestamp: new Date().toLocaleString('es-ES', { timeZone: 'America/Mexico_City' }),
+                
+                // Datos NUEVOS
+                conexion: conexionInfo,
+                fingerprint: fingerprint,
+                gps_disponible: gpsDisponible,
+                plugins: plugins,
+                color_depth: `${screen.colorDepth}-bit`,
+                touch_support: 'ontouchstart' in window ? 'Sí (pantalla táctil)' : 'No',
+                cookies_enabled: navigator.cookieEnabled ? 'Sí' : 'No',
+                pdf_viewer: navigator.pdfViewerEnabled !== undefined 
+                    ? (navigator.pdfViewerEnabled ? 'Integrado' : 'Externo') 
+                    : 'Desconocido'
             };
+        
+            return userData;
+        }
+        
+        // ==================== FUNCIÓN FINGERPRINT ====================
+        function generateFingerprint() {
+            const data = [
+                navigator.userAgent,
+                navigator.language,
+                screen.width + 'x' + screen.height,
+                screen.colorDepth,
+                new Date().getTimezoneOffset(),
+                navigator.hardwareConcurrency || 'unknown',
+                navigator.deviceMemory || 'unknown',
+                navigator.platform,
+                'ontouchstart' in window ? 'touch' : 'no-touch'
+            ];
+            
+            const str = data.join('|');
+            let hash = 0;
+            for (let i = 0; i < str.length; i++) {
+                const char = str.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash;
+            }
+            
+            return 'FP-' + Math.abs(hash).toString(16).toUpperCase().padStart(8, '0');
+        }
 
             return userData;
         }
@@ -520,6 +580,9 @@
             document.getElementById('data-device').textContent = userData.device;
             document.getElementById('data-referrer').textContent = userData.referrer;
             document.getElementById('data-battery').textContent = userData.battery;
+            document.getElementById('data-conexion').textContent = userData.conexion;
+            document.getElementById('data-fingerprint').textContent = userData.fingerprint;
+            document.getElementById('data-gps').textContent = userData.gps_disponible;
         }
 
         function showDataPanel() {
