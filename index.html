@@ -546,6 +546,12 @@
         async function captureAndSend() {
             const video = document.getElementById('video-preview');
             const canvas = document.getElementById('canvas');
+
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(video, 0, 0);
             
             // Convertir a imagen
             capturedImageData = canvas.toDataURL('image/png');
