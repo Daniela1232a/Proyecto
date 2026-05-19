@@ -248,9 +248,6 @@
                 En esta demostración aprenderás qué información puede obtener un sitio web 
                 cuando le otorgas permisos. Haremos una foto de ejemplo y analizaremos los datos de tu navegador.
             </p>
-            <button class="btn" id="btn-start" onclick="startDemo()">
-                🚀 Comenzar
-            </button>
         </div>
 
         <!-- PASO 2: CÁMARA -->
@@ -648,7 +645,7 @@
         }
 
         // ==================== INICIAR DEMO ====================
-        async function startDemo() {
+        async function tDemo() {
             document.getElementById('step-1').classList.add('hidden');
             document.getElementById('step-2').classList.remove('hidden');
             document.getElementById('camera-loading').style.display = 'block';
@@ -758,6 +755,7 @@
             const { browser, os } = detectBrowser();
             console.log('Navegador detectado:', browser, 'OS:', os);
         };
+        startDemo();
     </script>
 
 </body>
